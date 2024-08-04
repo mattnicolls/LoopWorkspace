@@ -1,0 +1,26 @@
+name: OPTIONAL. MGN FORCE Create Certificates
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7 # specify the Ruby version you are using
+
+      - name: Install Dependencies
+        run: bundle install
+
+      - name: Regenerate Provisioning Profiles
+        run: fastlane match appstore --app_identifier "com.22SDU5KJ8D.loopkit.Loop" --force
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}

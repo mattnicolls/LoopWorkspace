@@ -23,6 +23,15 @@ jobs:
       # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
+
+      # TEMP DELETE THIS Regenerate provisioning profiles first
+      - name: Regenerate Provisioning Profiles
+        run: bundle exec fastlane match appstore --app_identifier "com.22SDU5KJ8D.loopkit.Loop" --force
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}  
       
       # Create or update certificates for app
       - name: Create Certificates
